@@ -1,0 +1,13 @@
+{
+  "itemGroup.shieldcrouch": "Example Mod Tab",
+  "block.shieldcrouch.example_block": "Example Block",
+  "item.shieldcrouch.example_item": "Example Item",
+
+  "shieldcrouch.configuration.title": "Shield Crouch Configs",
+  "shieldcrouch.configuration.section.shieldcrouch.common.toml": "Shield Crouch Configs",
+  "shieldcrouch.configuration.section.shieldcrouch.common.toml.title": "Shield Crouch Configs",
+  "shieldcrouch.configuration.items": "Item List",
+  "shieldcrouch.configuration.logDirtBlock": "Log Dirt Block",
+  "shieldcrouch.configuration.magicNumberIntroduction": "Magic Number Text",
+  "shieldcrouch.configuration.magicNumber": "Magic Number"
+}

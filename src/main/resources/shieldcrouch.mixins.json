@@ -2,11 +2,18 @@
   "required": true,
   "package": "com.anormalraft.shieldcrouch.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "LivingEntityMixin",
+    "SwimPlayerMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+  },
+  "client": [
+    "LocalPlayerMixin",
+    "MinecraftMixin"
+  ]
 }

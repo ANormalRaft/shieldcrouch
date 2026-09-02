@@ -1,6 +1,6 @@
 package com.anormalraft.shieldcrouch.mixin;
 
-import com.anormalraft.shieldcrouch.Config;
+import com.anormalraft.shieldcrouch.config.CommonConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ public abstract class SwimPlayerMixin extends Entity implements IEntityExtension
     //Allows to cancel sprint-swimming by crouching whilst holding a shield
     @Inject(method = "updateSwimming", at = @At("HEAD"), cancellable = true)
     public void enableShieldSwimInterrupt(CallbackInfo ci){
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             //Note: Probably the only way to downcast when mixins are involved
             if ((Entity) (Object) this instanceof Player) {
                 if (this.isSwimming()) {

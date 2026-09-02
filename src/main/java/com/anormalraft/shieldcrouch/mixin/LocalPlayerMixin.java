@@ -1,6 +1,6 @@
 package com.anormalraft.shieldcrouch.mixin;
 
-import com.anormalraft.shieldcrouch.Config;
+import com.anormalraft.shieldcrouch.config.CommonConfig;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -20,7 +20,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
     //Keeps the crouch speed the same. In vanilla, shielding whilst crouching slows you down even more
     @Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isUsingItem()Z", ordinal = 0))
     public boolean removeSpeedDropFromShieldUse(LocalPlayer instance){
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             return (this.isUsingItem() && !(this.getUseItem().getItem() instanceof ShieldItem));
         }
         return instance.isUsingItem();

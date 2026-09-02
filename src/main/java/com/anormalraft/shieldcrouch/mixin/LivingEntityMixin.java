@@ -1,6 +1,6 @@
 package com.anormalraft.shieldcrouch.mixin;
 
-import com.anormalraft.shieldcrouch.Config;
+import com.anormalraft.shieldcrouch.config.CommonConfig;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +27,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
 
     @ModifyReturnValue(method="isBlocking", at=@At(value = "RETURN", ordinal = 0))
     public boolean remove5TickDelay(boolean original){
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             return this.useItem.canPerformAction(ItemAbilities.SHIELD_BLOCK);
         }
         return original;

@@ -1,6 +1,6 @@
 package com.anormalraft.shieldcrouch.mixin;
 
-import com.anormalraft.shieldcrouch.Config;
+import com.anormalraft.shieldcrouch.config.ServerConfig;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +19,7 @@ public class PoisonMobEffectMixin extends MobEffect {
     //Makes the 1 hp health check always true by giving it a 2 regardless of player health
     @Redirect(method = "applyEffectTick", at = @At(value="INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getHealth()F"))
     public float removeOneHpStop(LivingEntity instance){
-        if(Config.LETHAL_POISON.getAsBoolean()) {
+        if(ServerConfig.LETHAL_POISON.getAsBoolean()) {
             return 2.0F;
         } else {
             return instance.getHealth();

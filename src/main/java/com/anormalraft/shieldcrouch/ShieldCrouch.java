@@ -1,5 +1,7 @@
 package com.anormalraft.shieldcrouch;
 
+import com.anormalraft.shieldcrouch.config.CommonConfig;
+import com.anormalraft.shieldcrouch.config.ServerConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -30,14 +32,15 @@ public class ShieldCrouch {
 
         NeoForge.EVENT_BUS.register(this);
 
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        // Register Common and Server config
+        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
     }
 
     //Cancels the use of the shield on right click
     @SubscribeEvent
     public void onPlayerInteractRightClick(PlayerInteractEvent.RightClickItem event){
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             if (event.getItemStack().getItem() instanceof ShieldItem) {
                 event.setCanceled(true);
             }
@@ -48,7 +51,7 @@ public class ShieldCrouch {
     public void onPlayerTickEvent(PlayerTickEvent.Pre event){
         Player player = event.getEntity();
         //The rest is in MinecraftMixin
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             activateShieldOnCrouch(player);
         }
     }

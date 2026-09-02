@@ -1,6 +1,6 @@
 package com.anormalraft.shieldcrouch.mixin;
 
-import com.anormalraft.shieldcrouch.Config;
+import com.anormalraft.shieldcrouch.config.CommonConfig;
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -37,7 +37,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
 
     @Redirect(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/KeyMapping;isDown()Z", ordinal = 2))
     public boolean stepIntoKeyUseCheck(KeyMapping instance){
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             return false;
         } else {
             return instance.isDown();
@@ -46,7 +46,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
 
     @Redirect(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;releaseUsingItem(Lnet/minecraft/world/entity/player/Player;)V"))
     public void denyUseItemCancel(MultiPlayerGameMode instance, Player player){
-        if(Config.SHIELD_CROUCH.get()) {
+        if(CommonConfig.SHIELD_CROUCH.get()) {
             if (player.isShiftKeyDown()) {
                 if (!(player.getUseItem().getItem() instanceof ShieldItem)) {
                     if (!this.options.keyUse.isDown()) {

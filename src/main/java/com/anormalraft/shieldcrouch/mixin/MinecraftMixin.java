@@ -44,22 +44,38 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         }
     }
 
+    //Since we forcibly step into the release step in order for the crouching behavior to work without using the Use key, we need to re-do the original release logic for non-shield items. Note that this section of the code only triggers if we have a useItem already confirmed (there will always be a useItem in need of checking whether it needs to be released or not here)
     @Redirect(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;releaseUsingItem(Lnet/minecraft/world/entity/player/Player;)V"))
     public void denyUseItemCancel(MultiPlayerGameMode instance, Player player){
         if(CommonConfig.SHIELD_CROUCH.get()) {
-            if (player.isShiftKeyDown()) {
+            if(CommonConfig.DISABLE_RIGHT_CLICK.get()) {
+                //This is the usual (non-shield) item check since we forced our way through with stepIntoKeyUseCheck we need to include it
                 if (!(player.getUseItem().getItem() instanceof ShieldItem)) {
                     if (!this.options.keyUse.isDown()) {
                         instance.releaseUsingItem(player);
                     }
+                //If a shield is the useItem
+                } else {
+                    //If we are crouching, do nothing (continue the behavior of using the item). Else, release the use item (deactivate shield)
+                    if (!player.isShiftKeyDown()) {
+                        instance.releaseUsingItem(player);
+                    }
                 }
-            } else if (!(player.getUseItem().getItem() instanceof ShieldItem)) {
-                if (!this.options.keyUse.isDown()) {
-                    instance.releaseUsingItem(player);
-                }
+            //Disable right click is off variant
             } else {
-                instance.releaseUsingItem(player);
+                if (!player.isShiftKeyDown()) {
+                    if (!this.options.keyUse.isDown()) {
+                        instance.releaseUsingItem(player);
+                    }
+                } else {
+                    if (!(player.getUseItem().getItem() instanceof ShieldItem)) {
+                        if (!this.options.keyUse.isDown()) {
+                            instance.releaseUsingItem(player);
+                        }
+                    }
+                }
             }
+        //Default behavior
         } else {
             instance.releaseUsingItem(player);
         }

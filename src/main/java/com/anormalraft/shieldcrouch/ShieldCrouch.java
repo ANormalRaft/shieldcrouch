@@ -40,13 +40,14 @@ public class ShieldCrouch {
     //Cancels the use of the shield on right click
     @SubscribeEvent
     public void onPlayerInteractRightClick(PlayerInteractEvent.RightClickItem event){
-        if(CommonConfig.SHIELD_CROUCH.get()) {
+        if(CommonConfig.DISABLE_RIGHT_CLICK.get()) {
             if (event.getItemStack().getItem() instanceof ShieldItem) {
                 event.setCanceled(true);
             }
         }
     }
 
+    //Main functionality
     @SubscribeEvent
     public void onPlayerTickEvent(PlayerTickEvent.Pre event){
         Player player = event.getEntity();
@@ -75,6 +76,4 @@ public class ShieldCrouch {
             }
         }
     }
-
-
 }
